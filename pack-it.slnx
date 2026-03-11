@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PackIt.Api/PackIt.Api.csproj" />
+    <Project Path="src/PackIt.Application/PackIt.Application.csproj" />
+    <Project Path="src/PackIt.Domain/PackIt.Domain.csproj" />
+    <Project Path="src/PackIt.Infrastructure/PackIt.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/PackIt.Shared.Abstractions/PackIt.Shared.Abstractions.csproj" />
+    <Project Path="src/Shared/PackIt.Shared/PackIt.Shared.csproj" />
+  </Folder>
+</Solution>
