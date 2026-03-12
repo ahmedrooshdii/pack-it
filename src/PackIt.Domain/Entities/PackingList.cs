@@ -1,0 +1,71 @@
+﻿using PackIt.Domain.Events;
+using PackIt.Domain.Exceptions;
+using PackIt.Domain.ValueObjects.PackingItem;
+using PackIt.Domain.ValueObjects.PackingList;
+using PackIt.Shared.Abstractions.Domain;
+
+namespace PackIt.Domain.Entities
+{
+    public class PackingList : AggregateRoot<PackingListId>
+    {
+        private PackingListName _name;
+        private Localization _localization;
+
+        private readonly LinkedList<PackingItem> _items = new();
+
+        internal PackingList(Guid id, PackingListName name, Localization localization)
+        {
+            Id = id;
+            _name = name;
+            _localization = localization;
+        }
+
+        public void AddItem(PackingItem item)
+        {
+            var alreadyExists = _items.Any(i => i.Name == item.Name);
+            if (alreadyExists)
+            {
+                throw new PackingListItemAlreadyExistException(_name, item.Name);
+            }
+
+            _items.AddLast(item);
+            AddEvent(new PackingItemAddedEvent(this, item));
+        }
+
+        public void AddItems(IEnumerable<PackingItem> items)
+        {
+            foreach (var item in items)
+            {
+                AddItem(item);
+            }
+        }
+
+        public void PackItem(string itemName)
+        {
+            var item = GetItem(itemName);
+            var packedItem = item with { IsPacked = true };
+
+            _items.Find(item)!.Value = packedItem;
+            AddEvent(new PackingItemPackedEvent(this, packedItem));
+        }
+
+        public void RemoveItem(string itemName)
+        {
+            var item = GetItem(itemName);
+            _items.Remove(item);
+            AddEvent(new PackingItemRemovedEvent(this, item));
+        }
+
+        public PackingItem GetItem(string itemName)
+        {
+            var item = _items.SingleOrDefault(i => i.Name == itemName);
+
+            if (item == null)
+            {
+                throw new PackingListItemNotFoundException(itemName);
+            }
+
+            return item;
+        }
+    }
+}
