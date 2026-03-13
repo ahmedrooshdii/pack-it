@@ -7,7 +7,8 @@ namespace PackIt.Domain.Factories
 {
     public class PackingListFactory : IPackingListFactory
     {
-        public IEnumerable<IPackingItemsPolicy> _polices;
+        private IEnumerable<IPackingItemsPolicy> _polices
+            => new List<IPackingItemsPolicy>();
 
         public PackingList Create(PackingListId id, PackingListName name, Localization localization)
             => new PackingList(id, name, localization);
