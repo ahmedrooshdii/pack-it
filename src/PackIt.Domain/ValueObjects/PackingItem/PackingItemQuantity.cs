@@ -4,22 +4,22 @@ namespace PackIt.Domain.ValueObjects.PackingItem
 {
     public record PackingItemQuantity
     {
-        public string Value { get; }
+        public ushort Value { get; }
 
-        public PackingItemQuantity(string name)
+        public PackingItemQuantity(ushort quantity)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (quantity <= 0)
             {
                 throw new EmptyPackingListItemNameException();
             }
 
-            Value = name;
+            Value = quantity;
         }
 
-        public static implicit operator string(PackingItemQuantity quantity)
+        public static implicit operator ushort(PackingItemQuantity quantity)
             => quantity.Value;
 
-        public static implicit operator PackingItemQuantity(string value)
+        public static implicit operator PackingItemQuantity(ushort value)
             => new(value);
     }
 }
