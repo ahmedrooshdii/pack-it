@@ -2,7 +2,7 @@
 using PackIt.Shared.Abstractions.Commands;
 using System.Reflection;
 
-namespace PackIt.Shared
+namespace PackIt.Shared.Commands
 {
     public static class Extensions
     {
