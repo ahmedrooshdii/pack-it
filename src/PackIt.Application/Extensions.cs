@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PackIt.Domain.Factories;
 using PackIt.Domain.Policies;
-using PackIt.Shared;
+using PackIt.Shared.Commands;
 
 namespace PackIt.Application
 {
