@@ -2,6 +2,6 @@
 {
     public interface ICommandHandler<TCommand> where TCommand : class, ICommand
     {
-        Task HandleAsync(ICommand command, CancellationToken cancellationToken = default);
+        Task HandleAsync(TCommand command, CancellationToken cancellationToken = default);
     }
 }
